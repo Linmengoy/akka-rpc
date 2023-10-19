@@ -15,7 +15,7 @@ class Master extends  Actor{
 
     //4. 收到心跳后开始定期检查异常worker节点
     import context.dispatcher
-    context.system.scheduler.schedule(0 millisecond,20000 millisecond,self,CheckHeartbeat)
+    context.system.scheduler.schedule(0 millisecond,Master.CHECK_HEARTBEAT_INTERVAL millisecond,self,CheckHeartbeat)
   }
 
   override def receive: Receive = {

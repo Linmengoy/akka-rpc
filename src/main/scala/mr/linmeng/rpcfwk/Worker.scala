@@ -17,7 +17,7 @@ class Worker(val masterHost: String,
   override def preStart(): Unit = {
     // 3. worker向master发送注册消息
     // 与master建立连接
-    masterRef = context.actorSelection(s"akka://${Master.MASTER_ACTOR_SYSTEM_NAME}@${masterHost}:${masterPort}/user/${Master.MASTER_ACTOR_NAME}")
+    masterRef = context.actorSelection(s"akka.tcp://${Master.MASTER_ACTOR_SYSTEM_NAME}@${masterHost}:${masterPort}/user/${Master.MASTER_ACTOR_NAME}")
     //向master发送注册消息
     masterRef ! RegisterWorker(WORKER_ID, memory, cores)
   }
