@@ -22,7 +22,7 @@ class Worker extends Actor{
     // 第二个路径/MasterActor为master的actor名称
     //akka.tcp://${MasterActorSystemName}@${masterHostName}:${MasterPort}/user/${MasterActorName}
     //返回了与Master建立的连接（代理对象）
-    masterRef =  context.actorSelection("akka.tcp://MasterActorSystem@localhost:8888/user/MasterActor")
+    masterRef =  context.actorSelection("akka.tcp://MasterActorSystem@localhost:9999/user/MasterActor")
 
     //向master发送消息
     masterRef ! RegisterWorker("worker01",10240,4)
@@ -61,8 +61,8 @@ class Worker extends Actor{
 
 object Worker {
   def main(args: Array[String]): Unit = {
-    val hostname = "localhost"
-    val port = 9998
+    val hostname = args(0)
+    val port = args(1)
 
     val configStr =
       s"""

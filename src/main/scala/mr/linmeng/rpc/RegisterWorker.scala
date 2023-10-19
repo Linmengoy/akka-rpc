@@ -14,3 +14,7 @@ case object SendHeartBeat
 
 //之所以是多例的，因为他的worker不同
 case class HeartBeat(workerId:String)
+
+
+//Master自己发送给自己的消息
+case object CheckHeartbeat

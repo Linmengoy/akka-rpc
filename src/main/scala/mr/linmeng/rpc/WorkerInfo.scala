@@ -1,5 +1,6 @@
 package mr.linmeng.rpc
 
-class WorkerInfo(workerId:String , memory:Int , core:Int) {
+case class WorkerInfo(workerId:String , memory:Int , core:Int) {
 
+  var lastHeartbeatTime :Long = _
 }
