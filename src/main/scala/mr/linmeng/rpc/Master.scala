@@ -3,12 +3,40 @@ package mr.linmeng.rpc
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import com.typesafe.config.{Config, ConfigFactory}
 
+import scala.collection.mutable
+
 class Master extends Actor{
+
+  val idToWorkerInfo = new mutable.HashMap[String,WorkerInfo]()
+
   //receive用于接收其他Actor（也包括自己）发送的消息
   //type Receive = PartialFunction[Any , Unit] 偏函数，传入任意值，无法返回值
   override def receive: Receive = {
     case "today is sunny ~" => println("林蒙向你问好")
-    case "worker register" => println("worker注册成功！")
+
+    case RegisterWorker(workerId,memory,cores) => {
+
+      //将worker发送的消息保存起来
+      val workerInfo = new WorkerInfo(workerId,memory,cores)
+      //保存到可变的hashMap中
+      idToWorkerInfo(workerId) = workerInfo
+      //向worker返回注册成功的消息
+      sender() ! RegisteredWorker
+
+    }
+
+    case "worker register" => { println("worker注册成功！")
+
+
+      //master 接收到worker的消息后，给worker返回消息
+      //获取消费发送者的引用 sender直接返回给发送位置消息
+      sender() ! "ok"
+
+    }
+
+    case HeartBeat(workerId) => {
+      println(s"work: $workerId 发送了心跳")
+    }
     case _ => println("hi ~~~")
   }
 }
