@@ -8,6 +8,7 @@ class Master extends Actor{
   //type Receive = PartialFunction[Any , Unit] 偏函数，传入任意值，无法返回值
   override def receive: Receive = {
     case "today is sunny ~" => println("林蒙向你问好")
+    case "worker register" => println("worker注册成功！")
     case _ => println("hi ~~~")
   }
 }
